@@ -22,11 +22,15 @@ typedef NS_ENUM(NSUInteger, NetworkReachabilityStatus) {
 
 @end
 
+typedef void(^NetworkStatusChange)(NetworkReachabilityStatus status);
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface NetworkReachability : NSObject
 
 @property (nonatomic, weak) id<NetworkReachabilityDelegate> delegate;
+
+@property (nonatomic, copy) NetworkStatusChange networkStatusChange;
 
 + (instancetype)reachabilityForInternetConnection;
 + (instancetype)reachabilityWithHostName:(NSString *)hostName;

@@ -23,6 +23,23 @@
     self.reachability = [NetworkReachability reachabilityForInternetConnection];
     [self.reachability startNotifier];
 
+    self.reachability.networkStatusChange = ^(NetworkReachabilityStatus status) {
+        switch (status) {
+            case NetworkReachabilityStatusNotReachable:
+                NSLog(@"Block -- 没网");
+                break;
+            case NetworkReachabilityStatusReachableViaWWAN:
+                NSLog(@"Block -- 数据");
+                break;
+            case NetworkReachabilityStatusReachableViaWiFi:
+                NSLog(@"Block -- WIFI");
+                break;
+            case NetworkReachabilityStatusUnknown:
+                NSLog(@"Block -- 未知网络");
+                break;
+        }
+    };
+    
     self.reachability.delegate = self;
     
     return YES;
@@ -32,16 +49,16 @@
     
     switch (status) {
         case NetworkReachabilityStatusNotReachable:
-            NSLog(@"没网");
+            NSLog(@"delegate -- 没网");
             break;
         case NetworkReachabilityStatusReachableViaWWAN:
-            NSLog(@"数据");
+            NSLog(@"delegate -- 数据");
             break;
         case NetworkReachabilityStatusReachableViaWiFi:
-            NSLog(@"WIFI");
+            NSLog(@"delegate -- WIFI");
             break;
         case NetworkReachabilityStatusUnknown:
-            NSLog(@"未知网络");
+            NSLog(@"delegate -- 未知网络");
             break;
     }
 }

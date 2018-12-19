@@ -121,6 +121,10 @@ static void ReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkReach
     if ([_delegate respondsToSelector:@selector(networkStatusChangeToStatus:)]) {
         [_delegate networkStatusChangeToStatus:status];
     }
+    
+    if (self.networkStatusChange) {
+        self.networkStatusChange(status);
+    }
 }
 
 
